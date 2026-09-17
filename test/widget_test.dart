@@ -23,4 +23,19 @@ void main() {
     expect(find.byKey(const Key('calculator-display')), findsOneWidget);
     expect(find.text('5'), findsNWidgets(2));
   });
+
+  testWidgets('calculates 2 plus 2', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.tap(find.text('2'));
+    await tester.tap(find.text('+'));
+    await tester.tap(find.text('2'));
+    await tester.tap(find.text('='));
+    await tester.pump();
+
+    final display = tester.widget<Text>(
+      find.byKey(const Key('calculator-display')),
+    );
+    expect(display.data, '4');
+  });
 }
